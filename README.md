@@ -27,7 +27,7 @@ data remains more or less untouched and a database of the existing files and lay
 In this case, re-chunking the data so that chunks span over a longer temporal extent is essential. The second reason to re-write the data instead of only creating views into the original data is chunk alignment. In order to have most efficient access to a multivariate dataset, it is important that chunk boundaries of the individual variables align. Ideally, for training applications, a chunk would have exactly the size and shape of a single training batch, so that no excess data has to be read or transfered. 
 If all one wants to do is e.g. image classication on a univariate dataset, then rewriting the data is not necessary and the original data can be accessed directly (and maybe indexed before, if loading the dataset takes too long, maybe through approaches like https://xpublish.readthedocs.io/en/latest/ or by building an OpenDataCube)
 However, if one wants to operate on time series, e.g. traing an LSTM for that operates on full time series at a by-pixel level, one would have to rewrite the data once to a new data cube and a chunk size that has maximum extent in time. 
-If one wants to train a model on short sequences of images (i.e. video prediction, )
+If one wants to train a model on short sequences of images (i.e. video prediction, ), one would use chunks that reflect exactly the size of an image sequence. 
 
 ## General considerations
 
@@ -35,7 +35,7 @@ If one wants to train a model on short sequences of images (i.e. video predictio
 - unify metadata by loading into a common framework (xarray)
 - save the data and hope for Dask to solve chunking problems
 
-## A few words a
+## Generating single-resolution data cubes
 
 
 ## Cube generation in Julia using ESDL.jl
