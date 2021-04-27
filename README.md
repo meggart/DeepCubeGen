@@ -40,7 +40,14 @@ If one wants to train a model on short sequences of images (i.e. video predictio
 
 ## Cube generation in Julia using ESDL.jl
 
-- felixcremer, could you add a link to your example here?
+- If you want to use Julia for the data cube generation you can follow the [tutorial notebook](loads1tifs.jl)
+
+To start this tutorial you have to start Julia 1.6 in this folder and then you have to start Pluto with the current folder as environment by 
+```julia
+Pluto.run(;project="@.")
+```
+
+Then you can select the notebook inside of Pluto.
 
 ## Minicube generation in Python using xarray/rioxarray functionality only
 
