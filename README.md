@@ -57,8 +57,45 @@ This is a minimal example on how to build data cubes using xarray only. It is as
 gdalwarp -t_srs ESPG:4326 input.tif output.nc
 ````
 
-optionally one can crop and regrid the files already during this step by setting target exten (`-te `) and 
+optionally one can crop and regrid the files already during this step by setting target extent (`-te `) and target resolution (using `tr` or `ts` options).
 
+Then, from within a python session one first opens all the datasets to be cubed as xarray datasets. As examples, we here open an era5 land file and a static clc map. 
+
+````python
+import xarray as xr
+import dask
+import numpy as np
+
+era = xr.open_dataset("/Net/Groups/BGI/scratch/fgans/uc3-mini-dataset/ERA5-LAND/era5-land-hourly.nc")
+clc = xr.open_dataset("/Net/Groups/BGI/scratch/fgans/uc3-mini-dataset/CLC-2018-CROPPED_NC/cropped_CLC_2018.nc")
+````
+
+The next step would be to decide for a target spatial resolution and to create regridded representations of all input datasets. Here we assume that the target would be the CLC resolution. Then we can use xarray`s interp method to interpolate the data. The interpolation will fall back to scipy's interpolation methods and allows `linear` and `nearest` interpolations. For more complex/individual regridding, one can use gdal (see previous step) or xcube (next section). 
+
+````python
+target_lon = clc.lon
+target_lat = clc.lat
+era_interp = era.chunk().interp({'longitude':target_lon, 'latitude':target_lat},  method = 'linear')
+````
+
+Please note that it is essential to call `chunk` on the dataset to be regridded first to convert it to a dask array which is evaluated lazily. 
+
+In the next step we would collect all new output variables into one dictionary
+
+````python
+output_vars = {}
+for k in era_interp.keys():
+    output_vars[k] = era_interp[k]
+output_vars['clc'] = clc['Band1']
+````
+
+Then we create a new dataset from these DataArrays, select a target chunking and write the result to a new zarr file. 
+
+````python
+xr.Dataset(output_vars).chunk({'lon':200, 'lat':200}).to_zarr("./mydatacubelinear.zarr")
+````
+
+Note that this new dataset has identical spatial resolutions and through the small spatial chunks will have fast access to individual time series. 
 
 ## Data Cube generation using xcube-gen
 
