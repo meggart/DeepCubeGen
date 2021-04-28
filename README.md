@@ -31,7 +31,7 @@ If one wants to train a model on short sequences of images (i.e. video predictio
 
 ## General considerations
 
-- need to bring all data into a single spatial reference system
+Currently, in order for all of the python-based approaches to work, one needs to bring the original data to a common spatial reference system. This is required so that the regridding approaches taken in xcube etc are possible. Here we suggest to use tools like gdalwarp which allow you to reproject arbitrary images to a regular lon-lat grid. 
 - unify metadata by loading into a common framework (xarray)
 - save the data and hope for Dask to solve chunking problems
 
@@ -40,12 +40,13 @@ If one wants to train a model on short sequences of images (i.e. video predictio
 
 ## Cube generation in Julia using ESDL.jl
 
-- felixcremer, could you add a link to your example here?
+- 
 
 ## Minicube generation in Python using xarray/rioxarray functionality only
 
 - only for building mini-datacubes
 - when cubes get too large, the dask scheduler might give up when re-chunking
+- 
 
 ## Data Cube generation using xcube-gen
 
