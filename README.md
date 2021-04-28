@@ -51,10 +51,10 @@ Then you can select the notebook inside of Pluto.
 
 ## Minicube generation in Python using xarray/rioxarray functionality only
 
-This is a minimal example on how to build data cubes using xarray only. It is assumed that all inputs are already transformed to a ESPG:4326 longitude-latitude grid using tools like gdalwarp:
+This is a minimal example on how to build data cubes using xarray only. It is assumed that all inputs are already transformed to a EPSG:4326 longitude-latitude grid using tools like gdalwarp:
 
 ````
-gdalwarp -t_srs ESPG:4326 input.tif output.nc
+gdalwarp -t_srs EPSG:4326 input.tif output.nc
 ````
 
 optionally one can crop and regrid the files already during this step by setting target extent (`-te `) and target resolution (using `tr` or `ts` options).
