@@ -1,0 +1,15 @@
+name = "DeepCubeGen"
+authors = ["Felix Cremer"]
+
+[deps]
+ArchGDAL = "c9ce4bd3-c3d5-55b8-8973-c0e20141b8c3"
+DisplayAs = "0b91fe84-8a4c-11e9-3e1d-67c38462b6d6"
+ESDL = "359177bc-a543-11e8-11b7-bb015dba3358"
+Glob = "c27321d9-0574-5035-807b-f59d2c89b15c"
+JSServe = "824d6782-a2ef-11e9-3a09-e5662e0c26f9"
+Pluto = "c3e4b0f8-55cb-11ea-2926-15256bba5781"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+YAXArrays = "c21b50f5-aa40-41ea-b809-c0f5e47bfa5c"
+
+[compat]
+julia = "1.6.0"
