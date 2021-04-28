@@ -99,11 +99,27 @@ Note that this new dataset has identical spatial resolutions and through the sma
 
 ## Data Cube generation using xcube-gen
 
-- only for building single-resolution data cubes
-- 
-
 ### Prerequisites
 
 - every dataset is in NetCDF format, can consist of multiple files, but should be in a single folder
 - datasets should already be in equirectangular lon-lat coordinate system
-- s
+- make a config file in yaml format, an example config file would be:
+
+````yaml
+output_size: [2000,2000]
+output_region: [20, 36, 24, 39]
+output_writer_name: 'zarr'
+
+output_metadata:
+  created_by: 'NOA'
+  contact_email: 'yourmail@example.com'
+````
+
+- see [xcube-gen docs](https://xcube.readthedocs.io/en/latest/cli/xcube_gen.html) for more options
+- make sure that all static variables have a time dimension (use `ds.expand_dims`)
+- and add `time_bnds` attribute to them so they can be processed by the xcube default processor
+- Then cube the data by 
+
+````
+xcube gen -c xcube/config.yaml -o ./xcc.zarr ${PATH1}/*.nc ${PATH2}/cropped_CLC_2018_time.nc
+````
